@@ -1,0 +1,3 @@
+selenium
+requests
+webdriver-manager 3.7.1
