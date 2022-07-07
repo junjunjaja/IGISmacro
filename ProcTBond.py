@@ -66,12 +66,27 @@ class KofiaBond:
                 res["data"][columns_keys[i - 1]].append(
                     {k: v}
                 )
+        time.sleep(1)
         return res
+
+    @staticmethod
+    def process_json(data: dict):
+        dt = data['date']
+        asset = data['data'].keys()
+        result = dict()
+        for k in asset:
+            result[k.lower()] = [{
+                "date": dt,
+                "value": data['data'][k][1]['TODAYPM']
+            }]
+        return result
 
     def run(self):
         self.browse()
         d = self.search_rows()
-        print(d)  # result file
+        self.browser.close()
+        j = self.process_json(d)
+        return j
 
 
 if __name__ == "__main__":

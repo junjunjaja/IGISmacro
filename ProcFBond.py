@@ -45,12 +45,28 @@ class FBond:
             by=By.XPATH,
             value=const.T
         )
+        time.sleep(1)
         return self.process_rows(r.text)
+
+    @staticmethod
+    def process_json(data: dict):
+        print(data)
+        dt = data['date']
+        result = dict()
+        for periods in data['data']:
+            for k, v in periods.items():
+                result[k.lower()] = [{
+                    'date': dt,
+                    'value': v
+                }]
+        return result
 
     def run(self):
         self.browse()
         d = self.search_rows()
-        print(d)  # result file
+        self.browser.close()  # result file
+        j = self.process_json(d)
+        return j
 
 
 if __name__ == "__main__":

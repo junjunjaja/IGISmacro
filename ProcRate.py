@@ -20,7 +20,10 @@ class Koribor:
 
     def parse_html(self) -> List:
         # read off "제일 최근 공시"
-        yst = datetime.now() - timedelta(days=1)
+        if datetime.now().hour < 18:
+            yst = datetime.now()  - timedelta(days=1)
+        else:
+            yst = datetime.now()
         yst = yst.strftime("%Y-%m-%d")
 
         # find <td> </td>
@@ -57,6 +60,19 @@ class Koribor:
             res["data"].append({k: v})
 
         return res
+
+    @staticmethod
+    def process_json(data: dict) -> Dict:
+        dt = data['date']
+        rate_name = 'koribor'
+        result = dict()
+        for periods in data['data']:
+            for k, v in periods.items():
+                result[rate_name + k] = [{
+                    'date': dt,
+                    'value': v
+                }]
+        return result
 
 
 if __name__ == "__main__":
