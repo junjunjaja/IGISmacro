@@ -43,7 +43,7 @@ class KofiaBond:
         return space[-1].rstrip().lstrip().split(' ')  # return only the value
 
     def search_rows(self) -> Dict:
-        dt = datetime.now().strftime("%Y-%m-%d")
+        dt = datetime.now().strftime("%Y%m%d")
         columns = [
             "TODAYAM", "TODAYPM", "DELTA",
             "YESTERDAY", "YEARHIGH", "YEARLOW"
@@ -77,7 +77,7 @@ class KofiaBond:
         for k in asset:
             result[k.lower()] = [{
                 "date": dt,
-                "value": data['data'][k][1]['TODAYPM']
+                "value": float(data['data'][k][1]['TODAYPM'])
             }]
         return result
 

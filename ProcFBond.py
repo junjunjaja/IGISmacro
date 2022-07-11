@@ -33,7 +33,7 @@ class FBond:
         columns = ["date", "CD91D", "FB6M", "FB1Y", "FB3Y", "KR3Y"]
         r = row.split(' ')
         res = {
-            "date": r[0],
+            "date": datetime.strptime(r[0], "%Y/%m/%d").strftime('%Y%m%d'),
             "data": list()
         }
         for k, v in zip(columns[1:], r[1:]):
@@ -50,14 +50,13 @@ class FBond:
 
     @staticmethod
     def process_json(data: dict):
-        print(data)
         dt = data['date']
         result = dict()
         for periods in data['data']:
             for k, v in periods.items():
                 result[k.lower()] = [{
                     'date': dt,
-                    'value': v
+                    'value': float(v)
                 }]
         return result
 

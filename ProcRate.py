@@ -20,8 +20,8 @@ class Koribor:
 
     def parse_html(self) -> List:
         # read off "제일 최근 공시"
-        if datetime.now().hour < 18:
-            yst = datetime.now()  - timedelta(days=1)
+        if datetime.now().hour < 16:
+            yst = datetime.now() - timedelta(days=1)
         else:
             yst = datetime.now()
         yst = yst.strftime("%Y-%m-%d")
@@ -51,7 +51,7 @@ class Koribor:
         col = ["d", "1w", "1m", "2m", "3m", "6m", "12m", "_"]
 
         res = {
-            "date": d[0],
+            "date": datetime.strptime(d[0], "%Y-%m-%d").strftime("%Y%m%d"),
             "data": list()
         }
         for k, v in zip(col[1:], d[1:]):
@@ -70,7 +70,7 @@ class Koribor:
             for k, v in periods.items():
                 result[rate_name + k] = [{
                     'date': dt,
-                    'value': v
+                    'value': float(v)
                 }]
         return result
 
