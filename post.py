@@ -1,7 +1,7 @@
 import requests
 import json
 
-with open("macro.json", "r") as file:
+with open("./asset/macro.json", "r") as file:
     r = json.load(file)
 
 print(r)
