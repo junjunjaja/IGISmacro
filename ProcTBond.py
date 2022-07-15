@@ -1,4 +1,5 @@
 import c as const
+import WebOptions as options
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -12,16 +13,10 @@ import time
 
 class KofiaBond:
     def __init__(self):
-        # initialize selenium
-        chrome = webdriver.ChromeOptions()
-        chrome.add_experimental_option(
-            'useAutomationExtension',
-            False
-        )
         # open chrome browser
         self.browser = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()),
-            options=chrome
+            options=options.chrome_options
         )
 
     def browse(self):
